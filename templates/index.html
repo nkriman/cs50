@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Main
+{% endblock %}
+
+{% block main %}
+    <div class="section">
+
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Name</th>
+                            <th>Shares</th>
+                            <th>Price</th>
+                            <th>Value</th>
+                            <th>24h % change</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td>{{ (cash + value) | usd}}</td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for symbol in portfolio %}
+                            <tr>
+                                <td>{{ symbol.symbol }}</td>
+                                <td>{{ symbol.name }}</td>
+                                <td>{{ symbol.quantity }}</td>
+                                <td>{{ symbol.price | usd}}</td>
+                                <td>{{ (symbol.price * symbol.quantity) | usd }}</td>
+                                {% if symbol.change >= 0 %}
+                                    <td style ="color: green">{{ symbol.change }}%</td>
+                                {% else %}
+                                   <td style ="color: red">{{ symbol.change }}%</td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                            <tr>
+                                <td colspan="4">CASH</td>
+                                <td>{{ cash | usd}}</td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+{% endblock %}
